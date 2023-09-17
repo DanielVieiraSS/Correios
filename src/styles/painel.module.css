@@ -1,0 +1,35 @@
+.main {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main .sections {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: stretch;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.main .sections .leftSection {
+  flex: 1;
+}
+
+.main .sections .leftSection .carrossel {
+  width: 100%;
+  height: 500px;
+}
+
+.main .sections .leftSection .carrossel img {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+.main .sections .rightSection {
+  flex: 1;
+}
