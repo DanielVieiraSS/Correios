@@ -23,32 +23,34 @@ export default function Home() {
               />
             </div>
             <div className={styles.preferencial}>
-              <h2>ATENDIMENTO PREFERENCIAL NAS AGÊNCIAS DE CORREIOS</h2>
-              <h2>QUEM PODE USAR</h2>
+              <h2 className={styles.preferencialTitle}>
+                ATENDIMENTO PREFERENCIAL NAS AGÊNCIAS DE CORREIOS
+              </h2>
+              <h2 className={styles.preferencialSubTitle}>QUEM PODE USAR</h2>
               <ul>
                 <li>
-                  <Image src="/oldman.svg" alt="" height={30} width={30} />
+                  <Image src="/oldman.svg" alt="" height={64} width={64} />
                   <p>
-                    <span>IDOSOS:</span>Clientes com 60 anos ou mais têm
+                    <span>IDOSOS: </span>Clientes com 60 anos ou mais têm
                     prioridade no atendimento preferencial. Ao solicitar esse
                     serviço, eles serão atendidos com a máxima atenção e
                     agilidade.
                   </p>
                 </li>
                 <li>
-                  <Image src="/pregnant.svg" alt="" height={30} width={30} />
+                  <Image src="/pregnant.svg" alt="" height={64} width={64} />
                   <p>
-                    <span>GESTANTES:</span> Futuras mamães também têm direito ao
-                    atendimento preferencial. Entendemos que a gravidez traz
+                    <span>GESTANTES: </span> Futuras mamães também têm direito
+                    ao atendimento preferencial. Entendemos que a gravidez traz
                     desafios adicionais, e estamos aqui para tornar o processo
                     de envio e recebimento de encomendas o mais tranquilo
                     possível.
                   </p>
                 </li>
                 <li>
-                  <Image src="/wheelchair.svg" alt="" height={30} width={30} />
+                  <Image src="/wheelchair.svg" alt="" height={64} width={64} />
                   <p>
-                    <span>DEFICIENTES:</span>Se você ou alguém que está
+                    <span>DEFICIENTES: </span>Se você ou alguém que está
                     acompanhando precisa de assistência devido a mobilidade
                     reduzida, nosso atendimento preferencial está disponível
                     para garantir que sua visita à agência seja o mais suave
@@ -77,7 +79,7 @@ export default function Home() {
           </section>
         </div>
 
-        <footer>
+        <footer className={styles.footer}>
           <Image src="/Logo.png" alt="me" width="170" height="35" />
           <div className={styles.hourDate}>
             <h4>14:58</h4>

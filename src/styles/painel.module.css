@@ -16,6 +16,10 @@
 
 .main .sections .leftSection {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
 }
 
 .main .sections .leftSection .carrossel {
@@ -32,4 +36,117 @@
 
 .main .sections .rightSection {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.preferencial {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-center;
+  gap: 16px;
+}
+
+.preferencial span {
+  font-weight: bold;
+  font-size: 24;
+}
+
+.preferencial ul li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  list-style: none;
+}
+
+.preferencialTitle {
+  color: #423c3c;
+  font-family: Inter;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.preferencialSubTitle {
+  color: #008abf;
+  font-family: Inter;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.actualPassword {
+  display: flex;
+  padding: 100px 120px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 20px;
+  border: 5px solid #e6b808;
+  background: #ededed;
+  width: 100%;
+  height: 100%;
+}
+
+.actualPassword h2 {
+  color: #423c3c;
+  font-family: Inter;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.actualPassword h1 {
+  color: #00a9e2;
+  font-family: Inter;
+  font-size: 64px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: normal;
+}
+
+.lastPasswords {
+  width: 417px;
+  height: 400px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  border: 5px solid #797676;
+  background: #ededed;
+}
+
+.lastPasswords h2 {
+  color: #423c3c;
+  font-family: Inter;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.lastPasswords ul {
+  list-style: none;
+  color: #4e4f4f;
+  font-family: Inter;
+  font-size: 44px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: normal;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #d9d9d9;
+  padding: 32px 24px;
 }
