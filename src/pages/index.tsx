@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import Head from "next/head";
 import Image from "next/image";
+import { Carousel } from "./carousel";
 
 import styles from "@/styles/painel.module.css";
 
@@ -16,11 +17,12 @@ export default function Home() {
       <main className={`${inter.className} ${styles.main}`}>
         <div className={styles.sections}>
           <section className={styles.leftSection}>
-            <div className={styles.carrossel}>
-              <img
+            <div>
+              <Carousel />
+              {/* <img
                 src="https://images.unsplash.com/photo-1659353741638-9bbe25cd8715?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
                 alt="Imagem Ilustrativa"
-              />
+              /> */}
             </div>
             <div className={styles.preferencial}>
               <h2 className={styles.preferencialTitle}>
@@ -65,9 +67,14 @@ export default function Home() {
             <div className={styles.actualPassword}>
               <h2>SENHA ATUAL</h2>
               <h1>3560</h1>
-              <h3>Últimas: 3560 3560 3560</h3>
+              <div className={styles.lastPasswords}>
+                <h3>Últimas:</h3>
+                <h4>3560</h4> 
+                <h4>3560</h4>
+                <h4>3560</h4>
+              </div> 
             </div>
-            <div className={styles.lastPasswords}>
+            <div className={styles.nextPasswords}>
               <h2>Próximas Senhas</h2>
               <ul>
                 <li>3560</li>
