@@ -6,13 +6,17 @@ import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Head from "next/head";
+import VideoCarousel from "@/components/VideoCarousel";
 
 import { ListItem, ListItemText } from "@mui/material";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const MOCKED_IMAGE =
-  "https://images.unsplash.com/photo-1659353741638-9bbe25cd8715";
+const videos = [
+  "https://www.shutterstock.com/shutterstock/videos/1075562843/preview/stock-footage-outside-of-logistics-distributions-warehouse-with-female-manager-using-tablet-computer-talking-to.webm",
+  "https://www.shutterstock.com/shutterstock/videos/1037351024/preview/stock-footage-delivery-man-pushes-hand-truck-trolley-full-of-cardboard-boxes-hands-package-to-a-customer-who.webm",
+  "https://www.shutterstock.com/shutterstock/videos/1034015081/preview/stock-footage-slow-motion-close-up-hands-asian-woman-receive-a-cardboard-box-from-a-man-s-delivery-holding-at.webm",
+];
 
 export default function Home() {
   return (
@@ -48,61 +52,7 @@ export default function Home() {
               gap: "1rem",
             }}
           >
-            <img
-              src={MOCKED_IMAGE}
-              alt="Banner"
-              style={{
-                width: "100%",
-                height: "100%",
-                maxHeight: "1210px",
-                objectFit: "cover",
-                border: "5px solid #006B9C",
-                borderRadius: "1.25rem ",
-              }}
-            />
-
-            {/* <Box
-              width="100%"
-              display="flex"
-              flexDirection="column"
-              alignItems="flex-start"
-              justifyContent="flex-start"
-              gap="0.5rem"
-            >
-              <Typography
-                sx={{
-                  color: "#423C3C",
-                  fontSize: "1.5rem",
-                  fontStyle: "normal",
-                  fontWeight: "900",
-                  lineHeight: "normal",
-                  textTransform: "uppercase",
-                }}
-              >
-                Quem Pode Usar O Atendimento Preferencial Nas Agências De
-                Correios
-              </Typography>
-
-              <List>
-                <PreferredServiceTile
-                  title="Idosos"
-                  imageUrl="/svgs/oldman.svg"
-                  description="Clientes com 60 anos ou mais têm prioridade no atendimento preferencial. Ao solicitar esse serviço, eles serão atendidos com a máxima atenção e agilidade."
-                />
-
-                <PreferredServiceTile
-                  title="Gestantes"
-                  imageUrl="/svgs/pregnant.svg"
-                  description="Futuras mamães também têm direito ao atendimento preferencial. Entendemos que a gravidez traz desafios adicionais, e estamos aqui para tornar o processo de envio e recebimento de encomendas o mais tranquilo possível."
-                />
-
-                <PreferredServiceTile
-                  title="Deficientes"
-                  imageUrl="/svgs/oldman.svg"
-                  description="Se você ou alguém que está acompanhando precisa de assistência devido a mobilidade reduzida, nosso atendimento preferencial está disponível para garantir que sua visita à agência seja o mais suave possível. Basta informar nossa equipe no local."
-                />
-              </List>
-            </Box> */}
+            <VideoCarousel videos={videos} />
           </Grid>
 
           {/* Right Section */}
