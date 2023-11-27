@@ -1,4 +1,10 @@
-import { useState, useRef } from "react";
+import {
+  useState,
+  useRef,
+  useEffect,
+  DetailedHTMLProps,
+  VideoHTMLAttributes,
+} from "react";
 
 import Box from "@mui/material/Box";
 
@@ -8,7 +14,7 @@ interface VideoCarouselProps {
 
 export function VideoCarousel({ videos }: VideoCarouselProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const videoRef = useRef(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const handleVideoEnded = () => {
     setCurrentSlide((prevSlide) => (prevSlide + 1) % videos.length);
@@ -25,7 +31,9 @@ export function VideoCarousel({ videos }: VideoCarouselProps) {
         height={"100%"}
         ref={videoRef}
         src={videos[currentSlide]}
-        autoPlay
+        autoPlay={true}
+        playsInline
+        muted
         onEnded={handleVideoEnded}
       />
     </Box>
