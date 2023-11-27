@@ -1,14 +1,19 @@
 import { Footer } from "@/components/Footer";
 import { Inter } from "next/font/google";
 
+import VideoCarousel from "@/components/VideoCarousel";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Head from "next/head";
-import VideoCarousel from "@/components/VideoCarousel";
 
-import { ListItem, ListItemText } from "@mui/material";
+import { fetchPasswords } from "@/handlers/fetchPasswords.handler";
+import { CircularProgress, ListItem, ListItemText } from "@mui/material";
+import { useEffect, useState } from "react";
+import { IPassword } from "@/interfaces/password";
+import { supabaseClient } from "@/supabase/initializer";
+import { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +23,65 @@ const videos = [
   "https://www.shutterstock.com/shutterstock/videos/1034015081/preview/stock-footage-slow-motion-close-up-hands-asian-woman-receive-a-cardboard-box-from-a-man-s-delivery-holding-at.webm",
 ];
 
+// Realtime updation
+function realtimeUpdationOnInsertion(
+  handlerCallback: (payload: RealtimePostgresChangesPayload<IPassword>) => void
+) {
+  return supabaseClient
+    .channel("custom-all-channel")
+    .on(
+      "postgres_changes",
+      { event: "*", schema: "public", table: "senhas" },
+      (payload: RealtimePostgresChangesPayload<IPassword>) => {
+        handlerCallback(payload);
+      }
+    )
+    .subscribe();
+}
+
 export default function Home() {
+  const [passwords, setPasswords] = useState<IPassword[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    (async () => {
+      const response = await fetchPasswords();
+
+      setPasswords(response.data ?? []);
+
+      setTimeout(() => setIsLoading(false), 1000);
+    })();
+
+    const insertedPasswordSubscription = realtimeUpdationOnInsertion(
+      (payload) => {
+        if (payload.eventType == "UPDATE") {
+          setPasswords((oldList) => {
+            return oldList.map((e) => {
+              if (e.id == payload.new.id) {
+                return payload.new;
+              } else {
+                return e;
+              }
+            });
+          });
+        }
+
+        if (payload.eventType == "INSERT") {
+          setPasswords((oldList) => {
+            return [...oldList, payload.new];
+          });
+        }
+      }
+    );
+
+    return () => {
+      insertedPasswordSubscription.unsubscribe();
+    };
+  }, []);
+
+  const usedPasswords = passwords.filter((p) => p.used);
+  const pendingPasswords = passwords.filter((p) => !p.used);
+
   return (
     <>
       <Head>
@@ -96,18 +159,24 @@ export default function Home() {
                 Senha Atual
               </Typography>
 
-              <Typography
-                variant="h1"
-                sx={{
-                  color: "#00a9e2",
-                  fontSize: "4rem",
-                  fontStyle: "normal",
-                  fontWeight: "900",
-                  lineHeight: "normal",
-                }}
-              >
-                3560
-              </Typography>
+              {isLoading ? (
+                <CircularProgress />
+              ) : pendingPasswords.length == 0 ? (
+                "Fila livre"
+              ) : (
+                <Typography
+                  variant="h1"
+                  sx={{
+                    color: "#00a9e2",
+                    fontSize: "4rem",
+                    fontStyle: "normal",
+                    fontWeight: "900",
+                    lineHeight: "normal",
+                  }}
+                >
+                  {pendingPasswords[0]?.senha}
+                </Typography>
+              )}
 
               <Box
                 sx={{
@@ -136,9 +205,14 @@ export default function Home() {
                 }}
               >
                 <h3>Últimas:</h3>
-                <h4>3560</h4>
-                <h4>3560</h4>
-                <h4>3560</h4>
+                {usedPasswords.length == 0
+                  ? "Não Há últimas Senhas"
+                  : usedPasswords
+                      .reverse()
+                      .slice(0, 3)
+                      .map((e) => {
+                        return <h4 key={e.id}>{e.senha}</h4>;
+                      })}
               </Box>
             </Box>
 
@@ -165,47 +239,67 @@ export default function Home() {
                 Próximas Senhas
               </Typography>
 
-              <List
-                sx={{
-                  listStyle: "none",
-                  color: "#4e4f4f",
-                  fontSize: "44px",
-                  fontStyle: "normal",
-                  fontWeight: "900",
-                  lineHeight: "normal",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "1rem",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: "1rem",
-
-                  "& li *": {
-                    color: "#423c3c",
-                    fontSize: "3rem",
+              {isLoading ? (
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    height: "inherit",
+                    width: "100%",
+                  }}
+                >
+                  <CircularProgress />
+                </Box>
+              ) : pendingPasswords.length == 0 ? (
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    height: "90%",
+                    width: "100%",
+                  }}
+                >
+                  Não Há Próximas Senhas
+                </Box>
+              ) : (
+                <List
+                  sx={{
+                    listStyle: "none",
+                    color: "#4e4f4f",
+                    fontSize: "44px",
                     fontStyle: "normal",
                     fontWeight: "900",
                     lineHeight: "normal",
-                    transform: "uppercase",
-                  },
-                }}
-              >
-                <ListItem>
-                  <ListItemText sx={{ textAlign: "center" }}>2846</ListItemText>
-                </ListItem>
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "1rem",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "1rem",
 
-                <ListItem>
-                  <ListItemText sx={{ textAlign: "center" }}>2846</ListItemText>
-                </ListItem>
-
-                <ListItem>
-                  <ListItemText sx={{ textAlign: "center" }}>2846</ListItemText>
-                </ListItem>
-
-                <ListItem>
-                  <ListItemText sx={{ textAlign: "center" }}>2846</ListItemText>
-                </ListItem>
-              </List>
+                    "& li *": {
+                      color: "#423c3c",
+                      fontSize: "3rem",
+                      fontStyle: "normal",
+                      fontWeight: "900",
+                      lineHeight: "normal",
+                      transform: "uppercase",
+                    },
+                  }}
+                >
+                  {pendingPasswords.slice(1).map((e) => {
+                    return (
+                      <ListItem key={e.id}>
+                        <ListItemText sx={{ textAlign: "center" }}>
+                          {e.senha}
+                        </ListItemText>
+                      </ListItem>
+                    );
+                  })}
+                </List>
+              )}
             </Box>
           </Grid>
         </Grid>
