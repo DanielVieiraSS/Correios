@@ -251,7 +251,7 @@ export default function Home() {
                 >
                   <CircularProgress />
                 </Box>
-              ) : pendingPasswords.length == 0 ? (
+              ) : pendingPasswords.slice(1).length == 0 ? (
                 <Box
                   sx={{
                     display: "flex",
