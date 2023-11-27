@@ -33,7 +33,7 @@ export function Footer() {
         padding: "1rem 1.5rem",
       }}
     >
-      <Image src="/logo.png" alt="logo" width="170" height="35" />
+      <Image src="/imgs/logo.png" alt="logo" width="170" height="35" />
 
       <RealTimeClock />
     </Box>
